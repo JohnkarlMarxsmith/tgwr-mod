@@ -48,9 +48,6 @@ focus_tree = {
 					relation = guarantee
 					active = no
 				}
-				FRA = {
-					add_ideas = ENG_france_on_their_own
-				}
 				add_ai_strategy = {
 					type = alliance
 					id = FRA
@@ -281,36 +278,29 @@ focus_tree = {
 				transfer_state = 275
 				transfer_state = 719
 			}
-			if = {
-				limit = {
-					has_dlc = "Together for Victory"
-				}
-				ENG = {
-					set_autonomy = {
-						target = SAF
-						autonomous_state = autonomy_dominion
-						freedom_level = 0.55
-					}
-				}
-				hidden_effect = {
-					if = {
-						limit = {
-							has_government = democratic
-						}
-						SAF = {
-							set_popularities = {
-								democratic = 62
-								fascism = 10
-								communism = 2
-								neutrality = 26
-							}
-						}
-					}
+			ENG = {
+				set_autonomy = {
+					target = SAF
+					autonomous_state = autonomy_dominion
+					freedom_level = 0.55
 				}
 			}
-			news_event = {
-				id = ww1_england.101
-				hours = 5
+			hidden_effect = {
+				if = {
+					limit = { has_government = democratic }
+					SAF = {
+						set_popularities = {
+							democratic = 62
+							fascism = 10
+							communism = 2
+							neutrality = 26
+						}
+					}
+				}
+				news_event = {
+					id = ww1_england.101
+					hours = 5
+				}
 			}
 		}
 		ai_will_do = {
@@ -416,19 +406,11 @@ focus_tree = {
 				transfer_state = 770
 				add_state_core = 770
 			}
-			if = {
-				limit = {
-					has_dlc = "Together for Victory"
-				}
-				ENG = {
-					set_autonomy = {
-						target = ZIM
-						autonomous_state = autonomy_colony
-						freedom_level = 0.2
-					}
-				}
-				else = {
-					puppet = ZIM
+			ENG = {
+				set_autonomy = {
+					target = ZIM
+					autonomous_state = autonomy_colony
+					freedom_level = 0.2
 				}
 			}
 			hidden_effect = {
@@ -598,7 +580,9 @@ focus_tree = {
 				has_idea = idea_armistice
 			}
 			POR = {
-				owns_state = 544
+				any_owned_state = {
+					is_core_of = MZB
+				}
 			}
 			is_subject = no
 		}
@@ -615,6 +599,10 @@ focus_tree = {
 			}
 			hidden_effect = {
 				add_state_claim = 544
+				add_state_claim = 970
+				add_state_claim = 971
+				add_state_claim = 972
+				add_state_claim = 973
 			}
 		}
 	}
@@ -828,6 +816,15 @@ focus_tree = {
 				category = support_tech
 				category = infantry_tech
 			}
+			
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = ENG_rsaf_enfield_organization
+				mio:ENG_rsaf_enfield_organization = { add_mio_funds = 400 }
+			}
 		}
 	}
 	focus = {
@@ -1026,7 +1023,7 @@ focus_tree = {
 	}
 	focus = {
 		id = ENG_Land_Of_Explorer
-		icon = GFX_goal_generic_navy_battleship
+		icon = GFX_focus_dreadnought_UK
 		cost = 10
 		prerequisite = {
 			focus = ENG_fleet_mobilization
@@ -1115,7 +1112,6 @@ focus_tree = {
 				name = ENG_rule_the_waves_and_skies
 				bonus = 1
 				uses = 1
-				category = naval_bomber
 				category = naval_air
 			}
 		}
@@ -1263,7 +1259,7 @@ focus_tree = {
 			add_doctrine_cost_reduction = {
 				name = ENG_joint_staff
 				cost_reduction = 0.5
-				uses = 3
+				uses = 2
 				category = land_doctrine
 			}
 		}
@@ -1402,7 +1398,7 @@ focus_tree = {
 	focus = {
 		id = ENG_room_40
 		icon = GFX_focus_generic_strike_at_democracy1
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = ENG_joint_staff
 		}
@@ -1433,11 +1429,14 @@ focus_tree = {
 				custom_effect_tooltip = lar_decryption_bonus_tt
 			}
 		}
+		ai_will_do = {
+			base = 30
+		}
 	}
 	focus = {
 		id = ENG_Motorisation
 		icon = GFX_goal_generic_army_motorized
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = ENG_Royal_Armament_Factories
 		}
@@ -1446,7 +1445,7 @@ focus_tree = {
 		completion_reward = {
 			add_tech_bonus = {
 				name = ENG_Motorisation
-				bonus = 3
+				bonus = 2
 				uses = 1
 				category = motorized_equipment
 			}
@@ -1470,6 +1469,41 @@ focus_tree = {
 				technology = improved_armored_car
 				technology = advanced_armored_car
 			}
+			if = {
+				limit  ={
+					has_dlc = "No Step Back"
+				}
+				add_tech_bonus = {
+					name = ENG_RAC
+					uses = 1
+					bonus = 1
+					ahead_reduction = 1
+					technology = basic_heavy_tank_chassis
+				}
+				add_tech_bonus = {
+					name = ENG_RAC
+					uses = 1
+					bonus = 1
+					ahead_reduction = 1
+					technology = basic_light_tank_chassis
+				}
+				else = {
+					add_tech_bonus = {
+						name = ENG_RAC
+						uses = 1
+						bonus = 1
+						ahead_reduction = 1
+						technology = basic_heavy_tank
+					}
+					add_tech_bonus = {
+						name = ENG_RAC
+						uses = 1
+						bonus = 1
+						ahead_reduction = 1
+						technology = basic_light_tank
+					}
+				}
+			} 
 		}
 	}
 	focus = {
@@ -1483,23 +1517,73 @@ focus_tree = {
 		y = 5
 		available = {
 			has_war = yes
-			has_tech = improved_armored_car
+			OR = {
+				has_tech = basic_heavy_tank_chassis
+				has_tech = basic_heavy_tank
+			}
+
 		}
 		completion_reward = {
-			add_tech_bonus = {
-				name = ENG_Project_Tank
-				bonus = 1
-				uses = 1
-				category = armor
-			}
 			if = {
-				limit = {
-					NOT = {
-						has_tech = tank_design
+				limit  ={
+					has_dlc = "No Step Back"
+				}
+				create_equipment_variant = {
+					name = "Mark I" 
+					type = heavy_tank_chassis_0
+					parent_version = 0
+					modules = {
+						main_armament_slot = tank_heavy_machine_gun
+						turret_type_slot = tank_heavy_fixed_superstructure_turret
+						suspension_type_slot = tank_bogie_suspension
+						armor_type_slot = tank_riveted_armor
+						engine_type_slot = tank_gasoline_engine
+						special_type_slot_1 = additional_machine_guns
+						special_type_slot_2 = additional_machine_guns
+					}
+					upgrades = {
+						tank_nsb_engine_upgrade = 3
+						tank_nsb_armor_upgrade = 3
 					}
 				}
-				set_technology = {
-					tank_design = 1
+			}
+			division_template = {
+				name = "Royal Tank Regiment"
+				regiments = {
+					heavy_armor = {
+						x = 0
+						y = 0
+					}
+					heavy_armor = {
+						x = 0
+						y = 1
+					}
+					heavy_armor = {
+						x = 0
+						y = 2
+					}
+					heavy_armor = {
+						x = 0
+						y = 3
+					}
+					infantry = {
+						x = 1
+						y = 0
+					}
+					infantry = {
+						x = 1
+						y = 1
+					}
+				}
+			}
+			random_owned_controlled_state = {
+				limit = {
+					is_core_of = ROOT
+					is_on_continent = europe
+				}
+				create_unit = {
+					division = "name = \"1st Royal Tank Regiment\" division_template = \"Royal Tank Regiment\" start_equipment_factor = 3 start_experience_factor = 0.2"
+					owner = ROOT
 				}
 			}
 			custom_effect_tooltip = available_theorist
@@ -1557,7 +1641,7 @@ focus_tree = {
 	focus = {
 		id = ENG_Sheffield_Steel
 		icon = GFX_focus_generic_steel
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = ENG_Royal_Armament_Factories
 		}
@@ -1715,11 +1799,9 @@ focus_tree = {
 	focus = {
 		id = ENG_Land_Of_Inventors
 		icon = GFX_goal_tfv_generic_tech_sharing
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = ENG_The_Brightest
-		}
-		prerequisite = {
 			focus = ENG_Sheffield_Steel
 		}
 		x = 19
@@ -2920,23 +3002,20 @@ focus_tree = {
 				set_cosmetic_tag = ENG_cromwealth
 			}
 			ENG_herbert_kitchener = {
-				add_country_leader_role = {
-					promote_leader = yes
-					country_leader = {
-						ideology = fascism_ideology
-						
-						traits = {
-							lord_protector
-							
+				if = {
+					limit = {
+						has_ideology = fascism_ideology
+					}
+					add_country_leader_trait = lord_protector
+					promote_character = fascism_ideology
+				}
+				else = {
+					add_country_leader_role = {
+						promote_leader = yes
+						country_leader = {
+							ideology = fascism_ideology
+							traits = { lord_protector }
 						}
-					}
-				}	
-				set_portraits = {
-					civilian = {
-						large="gfx/leaders/ENG/ENG_herbert_kitchener_lord_protector.png"
-					}
-					army = {
-						large="gfx/leaders/ENG/ENG_herbert_kitchener_lord_protector.png"
 					}
 				}
 			}
@@ -3886,8 +3965,14 @@ focus_tree = {
 		x = 50
 		y = 2
 		available = {
+			has_war_with_major = yes
 			is_in_faction = yes
-			country_exists = POR
+			POR = {
+				exists = yes
+				NOT = {
+					has_war_with = ROOT
+				}
+			}
 			NOT = {
 				has_country_flag = great_war_loser
 			}
@@ -3970,12 +4055,22 @@ focus_tree = {
 			is_in_faction = yes
 			threat > 0.75
 			USA = {
-				has_government = democratic
+				is_subject = no
+				OR = {
+					has_government = democratic
+					has_government = ROOT
+				}
 				has_war_support > 0.5
+				NOT = {
+					has_war_with = ROOT
+				}
 			}
 			NOT = {
 				has_country_flag = great_war_loser
 			}
+		}
+		bypass = {
+			is_in_faction_with = USA
 		}
 		completion_reward = {
 			USA = {
@@ -4283,7 +4378,7 @@ focus_tree = {
 	focus = {
 		id = ENG_control_under_egypt
 		icon = GFX_goal_generic_defence
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = ENG_commonwealth_individuality
 		}
@@ -4294,10 +4389,8 @@ focus_tree = {
 		}
 		bypass = {
 			OR = {
-				EGY = {
-					NOT = {
-						is_subject_of = ENG
-					}
+				NOT = {
+					has_subject = EGY
 				}
 				TUR = {
 					has_completed_focus = TUR_kick_the_british_out_of_egypt
@@ -4305,25 +4398,11 @@ focus_tree = {
 			}
 		}
 		completion_reward = {
-			ENG = {
-				if = {
-					limit = {
-						has_subject_autonomy_feature = yes
-					}
-					EGY = {
-						set_country_flag = protectorate
-					}
-					set_autonomy = {
-						target = EGY
-						autonomous_state = autonomy_tgwr_protectorate
-						freedom_level = 0.8
-					}
-					else = {
-						EGY = {
-							add_ideas = protectorate
-						}
-					}
-				}
+			EGY = { set_country_flag = protectorate }
+			set_autonomy = {
+				target = EGY
+				autonomous_state = autonomy_tgwr_protectorate
+				freedom_level = 0.8
 			}
 			EGY = {
 				add_political_power = 100
@@ -4339,16 +4418,10 @@ focus_tree = {
 						neutrality = 76
 					}
 				}
-			}
-			if = {
-				limit = {
-					EGY = {
-						has_country_leader = {
-							character = EGY_abbas_ii_helmy
-						}
+				if = {
+					limit = {
+						NOT = { has_country_flag = egypt_british_coup }
 					}
-				}
-				EGY = {
 					country_event = ww1_egypt.2
 				}
 			}
@@ -4460,17 +4533,25 @@ focus_tree = {
 		available = {
 			OR = {
 				has_full_control_of_state = 656
-				KUW = {
-					AND = {
-						is_subject_of = ENG
+				656 = {
+					owner = {
 						has_full_control_of_state = 656
+						is_subject_of = ROOT
 					}
 				}
 			}
 		}
 		completion_reward = {
-			EGY = {
-				country_event = ww1_egypt.2
+			if = {
+				limit = {
+					has_subject = EGY
+					EGY = {
+						NOT = { has_country_flag = egypt_british_coup }
+					}
+				}
+				EGY = {
+					country_event = ww1_egypt.2
+				}
 			}
 			656 = {
 				add_building_construction = {
@@ -4492,23 +4573,42 @@ focus_tree = {
 				}
 			}
 			PER = {
-				413 = {
-					add_building_construction = {
-						type = bunker
-						level = 2
-						province = 7953
-						instant_build = yes
+				if = {
+					limit = {
+						owns_state = 413
+						NOT = {
+							has_war_with = ROOT
+						}
+						OR = {
+							is_in_faction_with = ROOT
+							is_subject_of = ROOT
+							gives_military_access_to = ROOT
+							is_guaranteed_by = ROOT
+							ENG = {
+								any_owned_state = {
+									is_core_of = PER
+								}
+							}
+						}
 					}
-				}
-				add_ai_strategy = {
-					type = befriend
-					id = ENG
-					value = 50
-				}
-				add_ai_strategy = {
-					type = alliance
-					id = ENG
-					value = 50
+					413 = {
+						add_building_construction = {
+							type = bunker
+							level = 2
+							province = 7953
+							instant_build = yes
+						}
+					}
+					add_ai_strategy = {
+						type = befriend
+						id = ENG
+						value = 50
+					}
+					add_ai_strategy = {
+						type = alliance
+						id = ENG
+						value = 50
+					}
 				}
 			}
 		}
@@ -4679,6 +4779,7 @@ focus_tree = {
 								has_war_with = ROOT
 								347 = { is_claimed_by = RUS }
 							}
+							tag = SOV
 							has_war_with = SOV
 						}
 					}
@@ -5118,20 +5219,38 @@ focus_tree = {
 	focus = {
 		id = ENG_singapore_strategy
 		icon = GFX_goal_generic_navy_cruiser
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = ENG_commonwealth_individuality
 		}
 		x = 62
 		y = 2
 		bypass = {
-			MAL = {
-				exists = no
+			336 = { is_owned_or_subject_trigger = no }
+			932 = { is_owned_or_subject_trigger = no }
+		}
+		available = {
+			OR = {
+				336 = { is_owned_or_subject_trigger = yes }
+				932 = { is_owned_or_subject_trigger = yes }
 			}
 		}
 		completion_reward = {
 			336 = {
 				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
+			}
+			932 = {
+				add_extra_state_shared_building_slots = 1
+				add_building_construction = {
+					type = industrial_complex
+					level = 1
+					instant_build = yes
+				}
 				add_building_construction = {
 					type = coastal_bunker
 					level = 3
@@ -5144,17 +5263,68 @@ focus_tree = {
 	focus = {
 		id = ENG_strenhten_malayan_administration
 		icon = GFX_focus_generic_self_management
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = ENG_singapore_strategy
 		}
 		x = 62
 		y = 3
 		available = {
-			has_subject = MAL
+			OR = {
+				has_subject = MAL
+				has_subject = KED
+				has_subject = KEL
+				has_subject = PLS
+				has_subject = TRG
+				has_subject = JOH
+			}
 		}
 		completion_reward = {
-			MAL = {
+			if = {
+				limit = {
+					JOH = {
+						exists = yes
+						is_subject = no
+					}
+					NOT = {
+						has_war_with = JOH
+					}
+				}
+				effect_tooltip = {
+					JOH = { set_country_flag = protectorate }
+					set_autonomy = {
+						target = JOH
+						autonomous_state = autonomy_tgwr_protectorate
+						freedom_level = 1
+					}
+				}
+				hidden_effect = {
+					JOH = {
+						get_current_government_type = yes
+						ROOT = {
+							JOH = { set_country_flag = protectorate }
+							set_autonomy = {
+								target = JOH
+								autonomous_state = autonomy_tgwr_protectorate
+								freedom_level = 1
+							}
+						}
+						restore_previous_government_type = yes
+					}
+				}
+			}		
+			every_other_country = {
+				limit = {
+					is_subject_of = ROOT
+					OR = {
+						original_tag = MAL
+						original_tag = KED
+						original_tag = KEL
+						original_tag = PLS
+						original_tag = TRG
+						original_tag = JOH
+					}
+				}
 				add_political_power = 100
 				add_ideas = ENG_british_patronage
 				add_ai_strategy = {
@@ -5168,7 +5338,7 @@ focus_tree = {
 	focus = {
 		id = ENG_nationalise_persian_oil
 		icon = GFX_goal_generic_oil_refinery
-		cost = 10
+		cost = 5
 		prerequisite = {
 			focus = ENG_Legacy_Of_Industrial_Revolution
 		}
@@ -5176,21 +5346,38 @@ focus_tree = {
 			NOT = {
 				has_war_with = PER
 			}
+			PER = {
+				OR = {
+					has_idea = PER_idea_foreign_reliance
+					any_owned_state = {
+						has_dynamic_modifier = {
+							modifier = per_british_sphere
+						}
+					}
+				}
+			}
 		}
 		x = -2
 		y = 0
 		relative_position_id = ENG_Business_As_Usual
 		completion_reward = {
-			PER = {
-				give_resource_rights = {
-					receiver = ENG
-					state = 413
+			effect_tooltip = {
+				PER = {
+					add_ideas = PER_idea_nationalised_oil
+					give_resource_rights = {
+						receiver = ENG
+						state = 413
+					}
+					give_resource_rights = {
+						receiver = ENG
+						state = 412
+					}
 				}
-				give_resource_rights = {
-					receiver = ENG
-					state = 412
+			}
+			hidden_effect = {
+				PER = {
+					country_event = ww1_persia.13
 				}
-				add_ideas = PER_idea_nationalised_oil
 			}
 		}
 		ai_will_do = {
@@ -5429,7 +5616,15 @@ focus_tree = {
 		y = 4
 		relative_position_id = ENG_balfours_folly
 		completion_reward = {
-			add_ideas = ENG_irish_loyalist_paramilitaries
+			add_ideas = ENG_irish_loyalist_paramilitaries	
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = ENG_rsaf_enfield_organization
+				mio:ENG_rsaf_enfield_organization = { add_mio_funds = 600 }
+			}
 		}
 
 	}
@@ -5505,6 +5700,14 @@ focus_tree = {
 		relative_position_id = ENG_balfours_folly
 		completion_reward = {
 			add_ideas = ENG_croft_budget
+			IF = {
+				limit = {
+					has_dlc = "Arms Against Tyranny"
+				}
+				custom_effect_tooltip = available_mio_tt
+				show_mio_tooltip = ENG_rsaf_enfield_organization
+				mio:ENG_rsaf_enfield_organization = { add_mio_funds = 150 }
+			}
 		}
 		ai_will_do = {
 			factor = 100

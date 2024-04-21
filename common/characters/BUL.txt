@@ -648,6 +648,7 @@ characters = {
 			traits = {
 				navy_chief_decisive_battle_2
 			}
+			cost = 100
 			available = {
 				date < 1913.4.13
 			}
@@ -688,6 +689,7 @@ characters = {
 			traits = {
 				army_logistics_2
 			}
+			cost = 100
 			available = {
 				NOT = {
 					has_war_with = RUS
